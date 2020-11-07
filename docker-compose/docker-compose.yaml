@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./karmakurier-frontend
+      dockerfile: Dockerfile
+    image: karmakurier-webapp:1.0
+    container_name: karmakurier-webapp
+    restart: always
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - karmakurier-network
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: karmakurier-api:1.0
+    container_name: karmakurier-api
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - karmakurier-network
+
+  db:
+    image: mongo:3.6.6
+    container_name: karmakurier-mongodb
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db/dbdata:/data/db
+    networks:
+      - karmakurier-network
+
+networks:
+  karmakurier-network:
+    driver: bridge
+volumes:
+  db-data:
