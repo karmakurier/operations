@@ -36,7 +36,7 @@ services:
     env_file:
       - .env
     volumes:
-      - db/dbdata:/data/db
+      - ./db/dbdata:/data/db
     networks:
       - karmakurier-network
 
