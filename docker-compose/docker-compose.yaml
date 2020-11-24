@@ -36,8 +36,6 @@ services:
     image: karmakurier-contact-backend:1.0
     container_name: karmakurier-contact-backend
     restart: always
-    ports:
-      - "3000:3000"
     env_file:
       - .env
     networks:
